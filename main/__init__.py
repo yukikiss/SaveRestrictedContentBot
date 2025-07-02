@@ -25,6 +25,11 @@ userbot = Client("saverestricted", session_string=SESSION, api_hash=API_HASH, ap
 
 try:
     userbot.start()
+    print('dialogs initialization...')
+    for x in userbot.get_dialogs():
+        continue
+    print('dialogs initialization... Done!')
+    
 except BaseException:
     print("Userbot Error ! Have you added SESSION while deploying??")
     sys.exit(1)
