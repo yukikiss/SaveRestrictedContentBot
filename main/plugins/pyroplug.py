@@ -66,9 +66,10 @@ async def get_msg(userbot, client, bot, sender, edit_id, msg_link, i):
             )
             print(file)
             await edit.edit('Preparing to Upload!')
-            caption = None
-            if msg.caption is not None:
-                caption = msg.caption
+            caption = f"userid: {msg.from_user.id}\nuser: {msg.from_user.first_name} {msg.from_user.last_name}\nchatid: {msg.chat.id}\nchat: {msg.chat.title}\ndate: {msg.date}"
+            # caption = None
+            # if msg.caption is not None:
+            #     caption = msg.caption
             if msg.media==MessageMediaType.VIDEO_NOTE:
                 round_message = True
                 print("Trying to get metadata")

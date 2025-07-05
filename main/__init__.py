@@ -26,8 +26,8 @@ userbot = Client("saverestricted", session_string=SESSION, api_hash=API_HASH, ap
 try:
     userbot.start()
     print('dialogs initialization...')
-    for x in userbot.get_dialogs():
-        continue
+    for dialog in userbot.get_dialogs():
+        print(dialog.chat.first_name or dialog.chat.title, dialog.chat.id)
     print('dialogs initialization... Done!')
     
 except BaseException:
