@@ -19,6 +19,7 @@ API_ID = config("API_ID", default=None, cast=int)
 API_HASH = config("API_HASH", default=None)
 BOT_TOKEN = config("BOT_TOKEN", default=None)
 SESSION = config("SESSION", default=None)
+SESSION_TELETHON = config("SESSION_TELETHON", default=None)
 FORCESUB = config("FORCESUB", default=None)
 AUTH = config("AUTH", default=None, cast=int)
 WHITELIST_JSON_FILE = config("WHITELIST_JSON_FILE", default=None)
@@ -41,7 +42,7 @@ load_whitelist()
 
 bot = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN) 
 
-userbot_telethon = TelegramClient('test', API_ID, API_HASH)
+userbot_telethon = TelegramClient(StringSession(SESSION_TELETHON), API_ID, API_HASH)
 userbot = Client("saverestricted", session_string=SESSION, api_hash=API_HASH, api_id=API_ID) 
 
 try:
