@@ -3,9 +3,11 @@
 import time, os
 
 from .. import bot as Drone
-from .. import userbot, Bot
+from .. import userbot_telethon, userbot, Bot, AUTH
+from .. import get_whitelist, load_whitelist, save_whitelist
 from .. import FORCESUB as fs
-from main.plugins.pyroplug import get_msg
+
+from main.plugins.pyroplug import get_msg, get_msg_clean
 from main.plugins.helpers import get_link, join
 
 from telethon import events
@@ -16,6 +18,24 @@ from ethon.telefunc import force_sub
 ft = f"To use this bot you've to join @{fs}."
 
 message = "Send me the message link you want to start saving from, as a reply to this message."
+
+# list all whitelisted chats
+@Drone.on(events.NewMessage(incoming=True, from_users=AUTH, pattern='/list'))
+async def list(event):
+    message = "Chat name, Chat Id, Output Channel"
+    for chat_id, output_channel in get_whitelist().items(): 
+        chat = await userbot.get_chat(chat_id)
+        message += f"\n{chat.title}, {chat_id}, {output_channel}"
+    await event.reply(message)
+    return
+
+# reload whitelist from file
+@Drone.on(events.NewMessage(incoming=True, from_users=AUTH, pattern='/reload'))
+async def list(event):
+    load_whitelist()
+    # print(get_whitelist())
+    await event.reply("Success!")
+    return
 
 @Drone.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def clone(event):
@@ -40,7 +60,8 @@ async def clone(event):
             await edit.edit(q)
             return
         if 't.me/' in link:
-            await get_msg(userbot, Bot, Drone, event.sender_id, edit.id, link, 0)
+            # await get_msg(userbot, Bot, Drone, event.sender_id, edit.id, link, 0)
+            await get_msg_clean(userbot, Bot, Drone, -1002493010660, link)
     except FloodWait as fw:
         return await Drone.send_message(event.sender_id, f'Try again after {fw.x} seconds due to floodwait from telegram.')
     except Exception as e:
