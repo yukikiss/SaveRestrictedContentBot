@@ -13,7 +13,7 @@ async def new_message_event_handler(event):
     sender_id = event.sender_id
     whitelist = get_whitelist() 
 
-    if str(chat_id) in whitelist and event.media and not sender.bot:
+    if str(chat_id) in whitelist and event.media and not sender.bot and not event.sticker:
         url = f"https://t.me/c/{event.chat.id}/{event.message.id}"
         print(chat_id, chat.title, chat.id, url, whitelist[str(chat_id)])
         

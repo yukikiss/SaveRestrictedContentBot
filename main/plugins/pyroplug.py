@@ -10,9 +10,19 @@ from pyrogram import Client, filters
 from pyrogram.errors import ChannelBanned, ChannelInvalid, ChannelPrivate, ChatIdInvalid, ChatInvalid, PeerIdInvalid
 from pyrogram.enums import MessageMediaType
 from ethon.pyfunc import video_metadata
-from ethon.telefunc import fast_upload, fast_upload_clean
+from ethon.telefunc import fast_upload
+from ethon.FasterTg import upload_file
 from telethon.tl.types import DocumentAttributeVideo
 from telethon import events
+
+async def fast_upload_clean(file, name, bot):
+    with open(file, "rb") as f:
+        result = await upload_file(
+            client=bot,
+            file=f,
+            filename=name,
+        )
+    return result
 
 def thumbnail(sender):
     if os.path.exists(f'{sender}.jpg'):
