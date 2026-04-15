@@ -23,6 +23,7 @@ SESSION_TELETHON = config("SESSION_TELETHON", default=None)
 FORCESUB = config("FORCESUB", default=None)
 AUTH = config("AUTH", default=None, cast=int)
 WHITELIST_JSON_FILE = config("WHITELIST_JSON_FILE", default=None)
+DIALOG_INITIALIZE_LIMIT = config("DIALOG_INITIALIZE_LIMIT", default=100, cast=int)
 
 WHITELIST = {}
 
@@ -48,10 +49,8 @@ userbot = Client("saverestricted", session_string=SESSION, api_hash=API_HASH, ap
 try:
     userbot.start()
     print('dialogs initialization...')
-    for dialog in userbot.get_dialogs():
-        # if "-100" in str(dialog.chat.id):
-        #     print(dialog.chat.first_name or dialog.chat.title, dialog.chat.id)
-        continue
+    for dialog in userbot.get_dialogs(DIALOG_INITIALIZE_LIMIT):
+        print(dialog.chat.first_name or dialog.chat.title, dialog.chat.id)
     print('dialogs initialization... Done!')
     
 except BaseException as e:
